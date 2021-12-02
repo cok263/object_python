@@ -1,3 +1,5 @@
+
+#Инкапсуляция
 class Point:
 
 #Атрибут класса(статическая переменная, также может быть приватной, т.е. __count и иметь геттеры и сеттеры)
@@ -51,7 +53,42 @@ class Point:
 		self.__y += y
 
 	def __repr__(self):
-		return f'Я - точка: {self.__x} x {self.__y}'
+		return f'Я - точка: {self.x} x {self.y}'
+
+#	def __str__(self):
+#		return 'Переопределяю __repr__ в некоторых случаях'
+
+
+#Наследование
+# Все классы изначально отнаследованы от object, т.е. class Point(object)
+class Point3D(Point):
+	#
+	def __init__(self, x, y, z):
+		self.__z = z
+		super().__init__(x, y)
+
+	#Добавление метода(не обязательно геттеры и сеттеры)
+	def get_z(self):
+		return self.__z
+
+	def set_z(self, value):
+		self.__z = value
+
+	z = property(get_z, set_z)
+
+	#Переопределение метода
+	def __repr__(self):
+		return f'Я - 3D точка: {self.x} x {self.y} x {self.z}'
+
+	def move_to(self, x, y, z):
+		self.__z = z
+		super().move_to(x, y)
+		#Тоже самое что и
+		#super(Point3D, self).move_to(x, y)
+		#super(self.__class__, self).move_to(x, y)
+		#Point.move_to(self, x, y)
+
+
 
 
 def main():
@@ -69,6 +106,14 @@ def main():
 	Point.static_count()
 	point3 = Point(33, 44)
 	print(f'Количество точек: {Point.count}')
+	p3d = Point3D(10, 20, 30)
+	print(p3d)
+	p3d.move_to(11, 12, 13)
+	print(p3d)
+	print(p3d.x, p3d.z)
+	Point.static_count()
+	Point3D.static_count()
+
 
 
 
